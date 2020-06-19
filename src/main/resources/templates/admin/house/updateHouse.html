@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入amazeui -->
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}"/>
+    <script  th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script  th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script  th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+</head>
+<body>
+<div style="text-align: center">
+    <h2>房源信息修改</h2>
+</div>
+<form class="am-form am-form-horizontal" th:action="@{/house/update}" th:method="post">
+    <input type="hidden" name="hid" th:value="${house.hid}">
+    <input th:value="${user.id}" id="getid" hidden>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered ">
+        <label for="doc-select-1" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">房东</label>
+        <div class="am-u-sm-7">
+            <select id="doc-select-1" th:name="user_id">
+                <option th:value="${landords.id}" th:text="${landords.name}" th:each="landords:${landords}"></option>
+            </select>
+            <span class="am-form-caret"></span>
+        </div>
+    </div>
+    <div class="am-form-group am-g  am-u-sm-5 am-u-sm-centered">
+        <label for="doc-select-2" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">城区</label>
+        <div class="am-u-sm-7">
+            <select id="doc-select-2">
+                <option th:value="${dis.did}" th:text="${dis.disName}" th:each="dis:${disByParentIds}"></option>
+            </select>
+            <span class="am-form-caret"></span>
+        </div>
+    </div>
+
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-select-3" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">街道</label>
+        <div class="am-u-sm-7">
+            <select id="doc-select-3" th:name="district_id">
+                <option th:value="13" th:text="百步亭"></option>
+            </select>
+            <span class="am-form-caret"></span>
+        </div>
+    </div>
+
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-select-4" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">房型</label>
+        <div class="am-u-sm-7">
+            <select id="doc-select-4" th:name="typeid">
+                <option th:value="${type.typeid}" th:text="${type.typedesc}" th:each="type:${hTypes}"></option>
+            </select>
+            <span class="am-form-caret"></span>
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-3" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">价格</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="price" id="doc-ipt-pwd-3" th:value="${house.price}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-4" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">面积</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="areas" id="doc-ipt-pwd-4" th:value="${house.areas}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-5" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">标题</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="title" id="doc-ipt-pwd-5" th:value="${house.title}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-6" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">标签</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="mark" id="doc-ipt-pwd-6" th:value="${house.mark}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-7" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">配备</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="equipment" id="doc-ipt-pwd-7" th:value="${house.equipment}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-8" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">地址</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="address" id="doc-ipt-pwd-8" th:value="${house.address}">
+        </div>
+    </div>
+    <div class="am-form-group am-g am-u-sm-5 am-u-sm-centered">
+        <label for="doc-ipt-pwd-9" class="am-u-sm-2 am-u-sm-offset-2 am-form-label">图片</label>
+        <div class="am-u-sm-7">
+            <input type="text" th:name="imgs" id="doc-ipt-pwd-9" th:value="${house.imgs}">
+        </div>
+    </div>
+    <div class="am-form-group">
+        <div class="am-u-sm-1 am-g am-u-sm-centered">
+            <button type="submit" class="am-btn am-btn-primary">确认修改</button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    load();
+    //给城区下拉框绑定change事件
+    $("#doc-select-2").change(function () {
+        //获取到选中城区的id
+        var did = $(this).val();
+        //根据城区id查询街道
+        $.get("/house/streets",{"did":did},function (streets) {
+            $("#doc-select-3").html("");
+            $.each(streets,function (index, street) {
+                console.log(street.disName);
+                var option='<option value="'+street.did+'">'+street.disName+'</option>';
+                $("#doc-select-3").append(option);
+            })
+        })
+    })
+    function load() {
+        var id = $("#getid").val();
+        const options1 = document.querySelector('#doc-select-1').options;
+        for(var i=0;i<options1.length;i++){//遍历单选框选项
+            if(options1[i].value==id)
+                options1[i].setAttribute("selected",true);//找到匹配的选项，设置成已选择
+        }
+    }
+</script>
+</html>

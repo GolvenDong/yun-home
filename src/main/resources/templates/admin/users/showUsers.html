@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}"/>
+    <script  th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script  th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script  th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+</head>
+<body>
+<span><a th:href="@{/admin}">返回</a></span>
+<div class="am-g">
+    <div class="am-u-lg-2">
+        <div class="am-input-group am-input-group-primary">
+      <span class="am-input-group-btn">
+        <button class="am-btn am-btn-primary" type="button" id="btn"><span class="am-icon-search"></span></button>
+      </span>
+            <input type="text" class="am-form-field" id="abstractSearch">
+        </div>
+    </div>
+</div>
+<h1 style="text-align: center">用户信息表</h1>
+
+<div class="am-g">
+    <div class="am-u-sm-8 am-u-sm-centered">
+        <table class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover am-table-centered">
+            <tr class=" am-primary">
+                <th>编号</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>性别</th>
+                <th>生日</th>
+                <th>头像</th>
+                <th>权限</th>
+            </tr>
+            <tbody id="tbody">
+                <tr th:each="users:${usersPageInfo.list}" id="res">
+                    <td th:text="${users.id}"></td>
+                    <td th:text="${users.name}"></td>
+                    <td th:text="${users.psw}"></td>
+                    <td th:text="${users.sex}"></td>
+                    <td th:text="${#dates.format(users.birth,'yyyy-MM-dd')}"></td>
+                    <td><img th:src="${users.head_img}" th:width="50px" th:height="50px"></td>
+                    <td th:text="${users.role}"></td>
+                </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</div>
+
+<!--分页-->
+<!-- 分页,详见 http://amazeui.shopxo.net/css/pagination/  -->
+<div class="am-container" id="divpage">
+    <ul class="am-pagination am-pagination-centered" id="pageSelect">
+    </ul>
+</div>
+    <input type="hidden" id="pages" th:value="${usersPageInfo.pages}">
+    <input type="hidden" id="pageNum" th:value="${usersPageInfo.pageNum}">
+
+</body>
+
+<script>
+
+    UsersPage();
+
+    function UsersPage() {
+        var pages = $("#pages").val();
+        var pageNum = $("#pageNum").val();
+
+        document.getElementById("divpage").style.visibility="visible";
+        var pagination = new Pagination({
+            wrap: $('.am-pagination'),//存放分页内容
+            count: parseInt(pages),//总页数
+            current: parseInt(pageNum),//当前页
+            prevText: '上一页', // prev 按钮的文本内容
+            nextText: '下一页', // next 按钮的文本内容
+            callback: function (current) { // 每一个页数按钮的回调事件
+                console.log(current)
+                location.href="/users/show?pageNo="+current;
+            }
+        });
+    }
+
+    $("#btn").click(function () {
+        $.get("/users/abstract",{"abContent":$("#abstractSearch").val()},function (data) {
+            console.data;
+            $("#tbody").html("");//清空tbody标签
+            $.each(data,function (index, user) {
+                var contentHtml='<tr><td>'+user.id+'</td>' +
+                    '<td>'+user.name+'</td>' +
+                    '<td>'+user.psw+'</td>' +
+                    '<td>'+user.sex+'</td>' +
+                    '<td>'+user.birth+'</td>' +
+                    '<td><img th:src="'+user.head_img+'" th:width="50px" th:height="50px"></td>' +
+                    '<td>'+user.role+'</td></tr>>'
+                $("#tbody").append(contentHtml);
+                document.getElementById("divpage").style.visibility="hidden";
+            })
+//            var cont = $("#pageSelect").attr("class");
+//            document.getElementById("pageSelect").setAttribute("class","am-disabled");
+
+        });
+
+    })
+
+
+
+
+
+</script>
+
+</html>

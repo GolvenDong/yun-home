@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <!-- 一.引入amazeui的css和js-->
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}"/>
+    <script  th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script  th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script  th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+</head>
+<body>
+<!-- 链接触发器， href 属性为目标元素 ID -->
+
+<!-- 侧边栏内容 -->
+<div id="doc-oc-demo1" class="am-offcanvas">
+    <div class="am-offcanvas-bar">
+        <div class="am-offcanvas-content">
+            <p><button onclick="showModel('/users/show')">用户维护</button></p>
+            <p><button onclick="showModel('/house/show')">房源维护</button></p>
+            <span><a th:href="@{/admin}">主菜单</a></span>
+        </div>
+    </div>
+</div>
+<div id="admin-content"></div>
+</body>
+<script>
+    $('#doc-oc-demo1').offCanvas({effect: 'push'});
+    function showModel(path) {
+        $("#admin-content").load(path)
+    }
+</script>
+</html>
